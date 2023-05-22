@@ -5,10 +5,11 @@ import requests
 
 config = configparser.ConfigParser()
 config.read('config.ini')
-token = config['Telegram']['bot_token']
-url = config['Telegram']['url']
 
-bot = telebot.TeleBot(token)
+TOKEN = config['Telegram']['bot_token']
+URL = config['Telegram']['url']
+
+bot = telebot.TeleBot(TOKEN)
 
 
 # Обработка команды start
@@ -27,7 +28,7 @@ def send_start(message):
 # Ответ на текстовое сообщение от пользователя
 @bot.message_handler(content_types=['text'])
 def handle_command(message):
-    bot.send_message(message.chat.id, 'Это что-то на кошачьем? Чтобы я мог определить породу собани Вам необходимо '
+    bot.send_message(message.chat.id, 'Это что-то на кошачьем? Чтобы я мог определить породу собани, Вам необходимо '
                                       'отправить фото')
 
 
@@ -38,7 +39,7 @@ def handle_command(message):
     file_info = bot.get_file(raw)
     downloaded_file = bot.download_file(file_info.file_path)
     try:
-        r = requests.post(url + 'predict/', files={'photo': downloaded_file})
+        r = requests.post(URL + 'predict/', files={'photo': downloaded_file})
         prediction = r.json()
         breed_eng, score = prediction['label'], prediction['score']
 
@@ -51,9 +52,10 @@ def handle_command(message):
             bot.send_message(message.chat.id, 'Так как я не могу дать более точного ответа, возможно, '
                                               'на фото не собаня')
     except requests.exceptions.ConnectionError:
-        bot.send_message(message.chat.id, 'Прости, но мой рабочий день на сегодня закончен. Но я буду ждать тебя в '
+        bot.send_message(message.chat.id, 'Прости, но мой рабочий день на сегодня закончен. Но я буду ждать Вас в '
                                           'другое время')
 
 
 # Запуск бота
 bot.infinity_polling()
+
