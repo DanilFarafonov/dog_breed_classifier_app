@@ -20,21 +20,21 @@ def send_start(message):
 
 # Обработка команды help
 @bot.message_handler(commands=['help'])
-def send_start(message):
+def send_help(message):
     bot.send_message(message.chat.id, 'Это классификатор пород собакенов. Я знаю 120 пород и помогу Вам '
                                       'определить что за песик изображен на фото. \nПросто отправьте мне изображение')
 
 
 # Ответ на текстовое сообщение от пользователя
 @bot.message_handler(content_types=['text'])
-def handle_command(message):
+def handle_text_command(message):
     bot.send_message(message.chat.id, 'Это что-то на кошачьем? Чтобы я мог определить породу собани, Вам необходимо '
                                       'отправить фото')
 
 
 # Обработка отправленного пользователем фото и выдача ответа с предсказанием
 @bot.message_handler(content_types=['photo'])
-def handle_command(message):
+def handle_photo_command(message):
     raw = message.photo[2].file_id
     file_info = bot.get_file(raw)
     downloaded_file = bot.download_file(file_info.file_path)
@@ -58,4 +58,3 @@ def handle_command(message):
 
 # Запуск бота
 bot.infinity_polling()
-
