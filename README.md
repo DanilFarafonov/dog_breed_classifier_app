@@ -5,4 +5,5 @@
  - сервис `server` написан на FastAPI и отвечает за распознавание пород при помощи модели машинного обучения [skyau/dog-breed-classifier-vit](https://huggingface.co/skyau/dog-breed-classifier-vit);
  - сервис `telebot` написан с использованием библиотеки pyTelegramBotAPI. 
 
-## Пример работы 
+## Пример работы приложения
+![Пример работы приложения](example.gif)
